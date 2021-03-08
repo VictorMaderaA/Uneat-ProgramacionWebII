@@ -16,16 +16,16 @@ export default function MainRouter() {
         <nav>
           <ul>
             <li>
-              <Link to="/">INICIO</Link>
+              <Link to="/">Inicio</Link>
             </li>
             <li>
-              <Link to="/principal">Home</Link>
+              <Link to="/principal">Principal</Link>
             </li>
             <li>
-              <Link to="/accesso">About</Link>
+              <Link to="/accesso">Accesso</Link>
             </li>
             <li>
-              <Link to="/registro">Users</Link>
+              <Link to="/registro">Registro</Link>
             </li>
           </ul>
         </nav>
