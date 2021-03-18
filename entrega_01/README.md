@@ -4,7 +4,7 @@ El ejercicio consiste en implementar una SPA con React.
 
 ## Entrega
 
-La fecha de entrega está por decidir.
+La práctica debe entregarse antes de [`21-03-21T21:00:00+01:00`](https://en.wikipedia.org/wiki/ISO_8601#Combined_date_and_time_representations).
 
 La entrega consistirá de:
 
