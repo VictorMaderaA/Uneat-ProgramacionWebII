@@ -5,6 +5,8 @@
 
 import {me} from "../services/auth";
 import {useEffect, useState} from "react";
+import {start} from "../assets/game";
+
 
 const Principal = () => {
 
@@ -15,6 +17,7 @@ const Principal = () => {
 
     useEffect(() => {
         me(meHandler.bind(this))
+        start()
     }, [])
 
     async function meHandler(data) {
@@ -49,6 +52,8 @@ const Principal = () => {
             <h2 style={{color: "red"}}>
                 {user.created_at}
             </h2>
+
+            <canvas id="gc" width="400" height="400"/>
 
         </>
     )
