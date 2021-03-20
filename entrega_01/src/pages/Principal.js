@@ -17,7 +17,6 @@ const Principal = () => {
 
     useEffect(() => {
         me(meHandler.bind(this))
-        start()
     }, [])
 
     async function meHandler(data) {
@@ -26,6 +25,12 @@ const Principal = () => {
         } else {
             console.error('Not LoggedIn')
         }
+    }
+
+    const gameStart = () => {
+        let canv = document.getElementById("gc");
+        let ctx = canv.getContext("2d");
+        start(canv, ctx)
     }
 
     return (
@@ -52,6 +57,8 @@ const Principal = () => {
             <h2 style={{color: "red"}}>
                 {user.created_at}
             </h2>
+
+            <button onClick={gameStart}>GAME</button>
 
             <canvas id="gc" width="400" height="400"/>
 

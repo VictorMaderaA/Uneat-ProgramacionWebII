@@ -1,6 +1,8 @@
-let canv = document.getElementById("gc");
-let ctx = canv.getContext("2d");
-export const start = () => {
+let canv;
+let ctx;
+export const start = (_canv, _ctx) => {
+    canv = _canv
+    ctx = _ctx
     document.addEventListener("keydown", keyPush);
     setInterval(game, 1000 / 15);
 }
