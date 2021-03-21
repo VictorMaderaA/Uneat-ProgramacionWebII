@@ -36,7 +36,7 @@ const Principal = () => {
     return (
         <>
             <h1>Principal</h1>
-
+            <button onClick={gameStart}>JUGAR</button>
             <h1>
                 Nombre:
             </h1>
@@ -58,7 +58,6 @@ const Principal = () => {
                 {user.created_at}
             </h2>
 
-            <button onClick={gameStart}>GAME</button>
 
             <canvas id="gc" width="400" height="400"/>
 
