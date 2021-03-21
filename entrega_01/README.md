@@ -47,4 +47,4 @@ La nota se calculará sumando los puntos obtenidos de las siguientes maneras:
 - Cinco puntos si el ejercicio cumple con el funcionamiento básico, descrito en el enunciado.
 - Un punto si la aplicación notifica al usuario los errores provinientes del servicio de autenticación con un [toaster o snackbar](https://github.com/iamhosseindhv/notistack) (no con `console.log` o `window.alert`).
 - Dos puntos si la aplicación implementa algún concepto avanzado de React, como [error boundaries](https://reactjs.org/docs/error-boundaries.html) o [hooks](https://reactjs.org/docs/hooks-intro.html).
-- Dos puntos si el componente interactivo de la vista principal consiste en un videojuego.
+- Dos puntos si el componente interactivo de la vista principal consiste en un videojuego.git
