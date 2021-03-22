@@ -1,6 +1,8 @@
 /*
 !/.gitignore
 !/README.md
+!/entrega_01
+!/entrega_02
 **/node_modules
 .DS_Store
 .idea
