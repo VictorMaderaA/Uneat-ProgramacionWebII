@@ -28,7 +28,7 @@ const Play = () => {
 
 
     const startGame = () => {
-        const newGameId = user.name + '-' +uuidv4();
+        const newGameId = `${user.name}-${uuidv4()}`;
         setGameId(newGameId)
         startNewGame(newGameId)
 
