@@ -4,25 +4,43 @@ import {clearGame, startNewGame, viewGame} from "../services/game";
 import {v4 as uuidv4} from 'uuid';
 import AuthContext from "../AuthContext";
 
+function useQuery() {
+    return new URLSearchParams(useLocation().search);
+}
+
 const Play = () => {
     let query = useQuery();
     const {user} = useContext(AuthContext);
 
     const [gameId, setGameId] = useState(query.get('gameId') ?? '')
-    const [gameData, setGameData] = useState({});
+    const [gameData, setGameData] = useState({
+        state: '',
+        points: 0,
+        won: false,
+        livesLeft: 3
+    });
 
-
-    function useQuery() {
-        return new URLSearchParams(useLocation().search);
+    const updateState = (data) => {
+        data.key = data.key?? gameId
+        console.log(data.key)
+        let d = {
+            ...gameData,
+            ...data
+        }
+        setGameData(d)
+        startNewGame(data.key, d);
     }
 
-    // TODO Mientras el usuario esté viendo los datos de la partida en la vista `/game/play`, ésta debe estar marcada como `en uso` en el servidor.
     useEffect(() => {
         if (gameId) {
-            viewGame(gameId)
+            updateState({
+                state: 'viewing',
+            })
         }
         return () => {
-            clearGame(gameId)
+            updateState({
+                state: '',
+            })
         }
     }, []);
 
@@ -30,18 +48,21 @@ const Play = () => {
     const startGame = () => {
         const newGameId = `${user.name}-${uuidv4()}`;
         setGameId(newGameId)
-        startNewGame(newGameId)
-
-        // TODO Mientras el usuario esté viendo los datos de la partida en la vista `/game/play`, ésta debe estar marcada como `en uso` en el servidor.
+        updateState({
+            state: 'playing',
+            key: newGameId
+        })
     }
-
-
-    // TODO Si se accede a la vista `/game/play` a través del enlace con texto `new game` en el compononte `Menu`, se deben mostrar los datos de una partida nueva. Esta partida debe aparecer en `/game/history` a partir de ese momento.
-
 
     return (
         <>
             <code>TBI</code>
+            <p>Key: {gameId}</p>
+            <p>Points: {gameData.points}</p>
+            <p>State: {gameData.state}</p>
+            <p>Won: {gameData.won}</p>
+            <p>User: {gameData.user}</p>
+            <p>LivesLeft: {gameData.livesLeft}</p>
             <button onClick={startGame}>
                 Start New Game
             </button>

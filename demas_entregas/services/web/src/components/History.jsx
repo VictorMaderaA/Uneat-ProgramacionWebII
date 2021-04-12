@@ -9,8 +9,9 @@ const History = () => {
     const [gameHistory, setGameHistory] = useState([1,2,3])
 
     useEffect(() => {
-        // allPrefix(user.name)
-        //     .then(data => setGameHistory(data))
+        allPrefix(1).then(r => {
+            setGameHistory(r)
+        })
     }, [])
 
     // TODO Debe tener una vista, `/game/history` con la lista de partidas anteriores del usuario, obtenidas del servidor

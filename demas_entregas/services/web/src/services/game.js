@@ -1,5 +1,7 @@
 const appId = '8e396b2f-2a39-447c-8317-3bae6a4avrma1';
 const basePath = 'https://0qh9zi3q9g.execute-api.eu-west-1.amazonaws.com/development'
+import * as gql from 'gql-query-builder'
+
 
 //Starts new game and set as playing
 export const startNewGame = (uuid, data) => {
@@ -7,76 +9,45 @@ export const startNewGame = (uuid, data) => {
     store(uuid, data)
 }
 
-//Change state of game to 'en uso'
-export const viewGame = (uuid) => {
-    console.log('Set Watching status for game ' + uuid)
-    find(uuid)
-}
-
-//Clear game status
-export const clearGame = (uuid) => {
-    console.log('Clear status for game ' + uuid)
-    find(uuid)
-        .then(res => res.json())
-        .then(json => {
-            console.log(json)
-            json['status'] = 'clear'
-            return store(uuid, json)
-        })
-}
-
 function store(uuid, data) {
-
-    fetch(basePath + `/pairs/${uuid}`, {
-        method: 'put',
-        body: JSON.stringify(data),
+    let requestOptions = {
+        method: 'POST',
         headers: {
-            'Content-Type': 'text/plain',
-            'x-application-id': appId
+            "Content-Type": "application/json"
         },
-    })
-        .then(res => res.json())
-        .then(json => {
-            console.log(json)
-            return json
-        });
+        body: JSON.stringify(gql.mutation({
+            operation: 'updatePair',
+            variables: {
+                ...data,
+                key: { value: uuid, required: true },
+            },
+            fields: ['applicationId', 'key']
+        }))
+    };
 
+    return fetch("http://localhost:3002/", requestOptions)
+        .then(response => response.json())
+        .catch(error => console.log('error', error));
 }
-
-export function find(uuid) {
-    return fetch(basePath + `/pairs/${uuid}`, {
-        method: 'get',
-        headers: {'x-application-id': appId},
-    })
-        .then(res => res.json())
-        .then(json => {
-            console.log(json)
-            return json
-        });
-}
-
-
-export function all() {
-    fetch(basePath + `/pairs`, {
-        method: 'get',
-        headers: {'x-application-id': appId},
-    })
-        .then(res => res.json())
-        .then(json => {
-            console.log(json)
-            return json
-        });
-}
-
 
 export function allPrefix(prefix) {
-    return fetch(basePath + `/collections/${prefix}`, {
-        method: 'get',
-        headers: {'x-application-id': appId},
-    })
-        .then(res => res.json())
-        .then(json => {
-            console.log(json)
-            return json
-        });
+    console.log(1)
+    let requestOptions = {
+        method: 'POST',
+        headers: {
+            "Content-Type": "application/json"
+        },
+        body: JSON.stringify(gql.query({
+            operation: 'pairs',
+            variables: {},
+            fields: ['applicationId', 'key']
+        }))
+    };
+
+    return fetch("http://localhost:3002/", requestOptions)
+        .then(response => response.json())
+        .then(r => {
+            return r.data.pairs
+        })
+        .catch(error => console.log('error', error));
 }

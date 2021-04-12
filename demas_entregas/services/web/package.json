@@ -10,6 +10,7 @@
   "author": "Gerardo Munguia",
   "license": "ISC",
   "dependencies": {
+    "gql-query-builder": "^3.5.5",
     "prop-types": "^15.7.2",
     "react": "^17.0.1",
     "react-dom": "^17.0.1",
