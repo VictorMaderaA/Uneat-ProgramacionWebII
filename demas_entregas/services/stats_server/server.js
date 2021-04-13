@@ -24,10 +24,20 @@ const typeDefs = `
         won: Boolean
         livesLeft: Int
     }
+    type Stats {
+        ganadas: Int
+        porcentaje_ganadas: Float
+        perdidas: Int
+        porcentaje_perdidas: Float
+        totales: Int
+        promedio_puntos: Float
+        puntos: Int
+    }
     type Query {
         pair(id: String!): Pair
         pairs: [Pair]
         pairByPrefix(prefix: String!): [Pair]
+        stats(prefix: String!): Stats
     }
     type Mutation{
         updatePair(
@@ -66,6 +76,42 @@ const resolvers = {
                 r[rKey].value = JSON.parse(r[rKey].value)
             }
             return r;
+        }),
+        stats: (_, {prefix}) => apiFetch(`${BASE_URL}/collections/${prefix}`, {
+            method: 'GET',
+            headers: DEFAULT_HEADERS
+        }).then(r => {
+            for (let rKey in r) {
+                r[rKey].value = JSON.parse(r[rKey].value)
+            }
+            return r;
+        }).then(r => {
+            let totales = 0;
+            let ganadas = 0;
+            let perdidas = 0;
+            let puntos = 0;
+
+            r.forEach(x=> {
+                totales++
+                ganadas += x.value.won? 1 : 0;
+                perdidas += x.value.won? 0 : 1;
+                puntos += x.value.points;
+            })
+
+            let porcentaje_ganadas = ganadas / totales
+            let porcentaje_perdidas = perdidas / totales
+            let promedio_puntos = puntos / totales
+
+            return {
+                totales,
+                ganadas,
+                perdidas,
+                puntos,
+                porcentaje_ganadas,
+                porcentaje_perdidas,
+                promedio_puntos
+            }
+
         }),
     },
     Mutation: {

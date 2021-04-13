@@ -51,7 +51,6 @@ export function allPrefix(prefix) {
     return fetch("http://localhost:3002/", requestOptions)
         .then(response => response.json())
         .then(r => {
-            console.log(r)
             return r.data.pairByPrefix
         })
         .catch(error => console.log('error', error));
@@ -80,8 +79,39 @@ export function find(key) {
     return fetch("http://localhost:3002/", requestOptions)
         .then(response => response.json())
         .then(r => {
-            console.log(5, r)
             return r.data.pair
+        })
+        .catch(error => console.log('error', error));
+}
+
+
+export function stats(key) {
+    let requestOptions = {
+        method: 'POST',
+        headers: {
+            "Content-Type": "application/json"
+        },
+        body: JSON.stringify(gql.query({
+            operation: 'stats',
+            variables: {
+                prefix: { value: key, required: true },
+            },
+            fields: [
+                'totales',
+                'ganadas',
+                'perdidas',
+                'puntos',
+                'porcentaje_ganadas',
+                'porcentaje_perdidas',
+                'promedio_puntos'
+            ]
+        }))
+    };
+
+    return fetch("http://localhost:3002/", requestOptions)
+        .then(response => response.json())
+        .then(r => {
+            return r.data.stats
         })
         .catch(error => console.log('error', error));
 }
