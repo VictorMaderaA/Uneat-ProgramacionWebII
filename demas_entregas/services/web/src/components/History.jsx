@@ -27,9 +27,13 @@ const History = () => {
     }, [])
 
     // TODO Al pulsar en una de las partidas de la lista anterior, debe redirigir al usuario a una tercera vista, `/game/play`, en la que se muestre algún dato de la partida seleccionada
-    const handleGameSelect = (gameId) => {
+    const handleGameSelect = (game) => {
+        if(game.value.state === 'viewing' || game.value.state === 'playing') {
+            window.alert('Juego en curso o no disponible')
+            return
+        }
         // 'en uso' Este dato debe reflejarse en la vista `/game/history`, de tal manera que no sea posible acceder a una partida que esté `en uso`.
-        history.push(`/game/play?gameId=${gameId}`);
+        history.push(`/game/play?gameId=${game['key']}`);
     }
 
 
@@ -54,7 +58,7 @@ const History = () => {
                 {
                     gameHistory.map((v, k) => {
                         return (
-                            <tr>
+                            <tr key={k}>
                                 <td>{v.key}</td>
                                 <td>{v.createdAt}</td>
                                 <td>{v.value.state}</td>
@@ -62,7 +66,7 @@ const History = () => {
                                 <td>{v.value.won? 'Ganador': 'Perdedor'}</td>
                                 <td>{v.value.livesLeft}</td>
                                 <td>
-                                    <button onClick={() => handleGameSelect(v['key'])}>
+                                    <button onClick={() => handleGameSelect(v)}>
                                         Ver Partida
                                     </button>
                                 </td>

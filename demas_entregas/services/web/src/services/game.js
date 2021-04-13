@@ -2,7 +2,8 @@ import * as gql from 'gql-query-builder'
 
 
 //Starts new game and set as playing
-export const startNewGame = (uuid, data) => {
+export const updateGame = (uuid, data) => {
+    console.log('UPDATE', uuid, data)
     store(uuid, data)
 }
 

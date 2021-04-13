@@ -1,6 +1,6 @@
 import React, {useContext, useEffect, useState} from "react";
 import {useLocation} from "react-router";
-import {find, setNone, startNewGame} from "../services/game";
+import {find, setNone, updateGame} from "../services/game";
 import {v4 as uuidv4} from 'uuid';
 import AuthContext from "../AuthContext";
 import {useHistory} from "react-router-dom";
@@ -8,6 +8,8 @@ import {useHistory} from "react-router-dom";
 function useQuery() {
     return new URLSearchParams(useLocation().search);
 }
+
+let game = null;
 
 const Play = () => {
     let query = useQuery();
@@ -25,15 +27,23 @@ const Play = () => {
             ...data
         }
         setGameData(d)
-        startNewGame(data.key, d);
+        updateGame(data.key, d);
+        game = d;
     }
 
     useEffect(() => {
         if (gameId) {
             find(gameId).then(r => {
-                if(r.state === 'viewing' || r.state === 'playing'){
+                if(!r){
+                    window.alert('Fallo del servidor. Intente mas tarde.')
+                    history.push('/game/history')
+                }
+                console.log('TEST',r)
+                if(r.value.state === 'viewing' || r.value.state === 'playing'){
+                    window.alert('Juego en curso o no disponible')
                     history.push('/game/history')
                 }else{
+                    console.log('LOADED', r.value)
                     updateState({
                         ...r.value,
                         state: 'viewing',
@@ -42,16 +52,22 @@ const Play = () => {
             })
         }
         return (x) => {
-            // console.log('GAMEDATA', gameData)
-            // updateState({
-            //     ...gameData,
-            //     state: 'none',
-            // })
+            console.log('GAMEDATA', gameData)
+            updateState({
+                ...game,
+                state: 'none',
+            })
         }
     }, []);
 
 
     const startGame = () => {
+        if(gameId){
+            updateState({
+                ...game,
+                state: 'none',
+            })
+        }
         const newGameId = `${user.name}-${uuidv4()}`;
         setGameId(newGameId)
         updateState({

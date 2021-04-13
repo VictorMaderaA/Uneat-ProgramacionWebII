@@ -3,7 +3,7 @@ const fetch = require("node-fetch");
 
 const BASE_URL = "https://0qh9zi3q9g.execute-api.eu-west-1.amazonaws.com/development";
 const DEFAULT_HEADERS = {
-    "x-application-id": "vrma638a-a986-442f-b029-feb40bd4d4dd"
+    "x-application-id": "vrma2638a-a986-442f-b029-feb40bd4d4dd"
 }
 
 const apiFetch = (...args) => fetch(...args)
