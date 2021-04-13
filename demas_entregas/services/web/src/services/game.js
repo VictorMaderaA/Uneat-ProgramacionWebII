@@ -1,11 +1,8 @@
-const appId = '8e396b2f-2a39-447c-8317-3bae6a4avrma1';
-const basePath = 'https://0qh9zi3q9g.execute-api.eu-west-1.amazonaws.com/development'
 import * as gql from 'gql-query-builder'
 
 
 //Starts new game and set as playing
 export const startNewGame = (uuid, data) => {
-    console.log('Starting game with ' + uuid)
     store(uuid, data)
 }
 
@@ -21,7 +18,7 @@ function store(uuid, data) {
                 ...data,
                 key: { value: uuid, required: true },
             },
-            fields: ['applicationId', 'key']
+            fields: ['applicationId', 'key', 'createdAt']
         }))
     };
 
@@ -31,23 +28,59 @@ function store(uuid, data) {
 }
 
 export function allPrefix(prefix) {
-    console.log(1)
     let requestOptions = {
         method: 'POST',
         headers: {
             "Content-Type": "application/json"
         },
         body: JSON.stringify(gql.query({
-            operation: 'pairs',
-            variables: {},
-            fields: ['applicationId', 'key']
+            operation: 'pairByPrefix',
+            variables: {
+                prefix: { value: prefix, required: true },
+            },
+            fields: ['applicationId', 'key', 'createdAt',{value: [
+                    'state',
+                    'points',
+                    'won',
+                    'livesLeft',
+                ]}]
         }))
     };
 
     return fetch("http://localhost:3002/", requestOptions)
         .then(response => response.json())
         .then(r => {
-            return r.data.pairs
+            console.log(r)
+            return r.data.pairByPrefix
+        })
+        .catch(error => console.log('error', error));
+}
+
+export function find(key) {
+    let requestOptions = {
+        method: 'POST',
+        headers: {
+            "Content-Type": "application/json"
+        },
+        body: JSON.stringify(gql.query({
+            operation: 'pair',
+            variables: {
+                id: { value: key, required: true },
+            },
+            fields: ['applicationId', 'key', 'createdAt', {value: [
+                    'state',
+                    'points',
+                    'won',
+                    'livesLeft',
+                ]}]
+        }))
+    };
+
+    return fetch("http://localhost:3002/", requestOptions)
+        .then(response => response.json())
+        .then(r => {
+            console.log(5, r)
+            return r.data.pair
         })
         .catch(error => console.log('error', error));
 }

@@ -6,18 +6,25 @@ import {allPrefix} from "../services/game";
 const History = () => {
 
     const history = useHistory();
-    const [gameHistory, setGameHistory] = useState([1,2,3])
+    const [gameHistory, setGameHistory] = useState([])
+    const {user} = useContext(AuthContext);
+    const [interval, setInterval] = useState(0);
+
+    const load = () => {
+        console.log('LOAD')
+        allPrefix(user.name).then(r => {
+            setGameHistory(r?? [])
+        })
+    }
 
     useEffect(() => {
-        allPrefix(1).then(r => {
-            setGameHistory(r)
-        })
+        load()
+        let i = window.setInterval(load, 15000)
+        return () => {
+            console.log('CLEAR')
+            window.clearInterval(i)
+        }
     }, [])
-
-    // TODO Debe tener una vista, `/game/history` con la lista de partidas anteriores del usuario, obtenidas del servidor
-    const loadGameHistory = () => {
-
-    }
 
     // TODO Al pulsar en una de las partidas de la lista anterior, debe redirigir al usuario a una tercera vista, `/game/play`, en la que se muestre algún dato de la partida seleccionada
     const handleGameSelect = (gameId) => {
@@ -26,22 +33,49 @@ const History = () => {
     }
 
 
-    const {user} = useContext(AuthContext);
 
     return (
         <>
             <p>{user.name}’s past games</p>
-            {
-                gameHistory.map((v, k) => {
-                    return (
-                        <button onClick={() => handleGameSelect(v['key'])}>
-                            Game {v['key']}
-                        </button>
-                    )
-                })
-            }
+
+            <table style={{width: '100%'}}>
+                <thead>
+                <tr>
+                    <td>Key</td>
+                    <td>Fecha Ultima Modificacion</td>
+                    <td>Estado</td>
+                    <td>Puntos</td>
+                    <td>Resultado</td>
+                    <td>Vidas Restantes</td>
+                    <td>Actions</td>
+                </tr>
+                </thead>
+                <tbody>
+                {
+                    gameHistory.map((v, k) => {
+                        return (
+                            <tr>
+                                <td>{v.key}</td>
+                                <td>{v.createdAt}</td>
+                                <td>{v.value.state}</td>
+                                <td>{v.value.points}</td>
+                                <td>{v.value.won? 'Ganador': 'Perdedor'}</td>
+                                <td>{v.value.livesLeft}</td>
+                                <td>
+                                    <button onClick={() => handleGameSelect(v['key'])}>
+                                        Ver Partida
+                                    </button>
+                                </td>
+                            </tr>
+                        )
+                    })
+                }
+                </tbody>
+            </table>
+
+
         </>
     );
-};
+}
 
 export default History;

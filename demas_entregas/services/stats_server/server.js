@@ -15,6 +15,7 @@ const typeDefs = `
         applicationId: String
         key: String
         value: Game
+        createdAt: String
     }
     type Game {
         user: String
@@ -24,7 +25,7 @@ const typeDefs = `
         livesLeft: Int
     }
     type Query {
-        pair(id: ID!): Pair
+        pair(id: String!): Pair
         pairs: [Pair]
         pairByPrefix(prefix: String!): [Pair]
     }
@@ -74,6 +75,7 @@ const resolvers = {
             body: JSON.stringify(args),
         }).then(r => r.json())
             .then(async r => {
+                console.log(r)
                 r.value = await JSON.parse(r.value);
                 return r
             })
