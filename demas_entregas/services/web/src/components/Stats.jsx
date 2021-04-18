@@ -20,15 +20,47 @@ const Stats = () => {
   }, [])
 
   return <>
-    <p>{user.name}’s stats</p>
-
-    <p>Partidas Totales: {stat?.totales}</p>
-    <p>Ganadas: {stat?.ganadas}</p>
-    <p>Perdidas: {stat?.perdidas}</p>
-    <p>Puntos: {stat?.puntos}</p>
-    <p>Promedio Puntos: {stat?.promedio_puntos}</p>
-    <p>Porcentaje Ganadas: {stat?.porcentaje_ganadas}</p>
-    <p>Porcentaje perdidas: {stat?.porcentaje_perdidas}</p>
+    <h1 className="centrar">{user.name}’s stats</h1>
+  <div className="container">
+    <table className="table">
+      <thead>
+        <tr>
+          <th>Métrica</th>
+          <th>Valor</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>Partidas totales</td>
+          <td>{stat?.totales}</td>
+        </tr>
+        <tr>
+          <td>Ganadas</td>
+          <td>{stat?.ganadas}</td>
+        </tr>
+        <tr>
+          <td>Perdidas</td>
+          <td>{stat?.perdidas}</td>
+        </tr>
+        <tr>
+          <td>Puntos</td>
+          <td>{stat?.puntos}</td>
+        </tr>
+        <tr>
+          <td>Promedio</td>
+          <td>{stat?.promedio_puntos}</td>
+        </tr>
+        <tr>
+          <td>Ganadas(%)</td>
+          <td>{stat?.porcentaje_ganadas}</td>
+        </tr>
+        <tr>
+          <td>Perdidas(%)</td>
+          <td>{stat?.porcentaje_perdidas}</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
 
   </>;
 };

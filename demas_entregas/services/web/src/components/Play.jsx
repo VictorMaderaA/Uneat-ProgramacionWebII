@@ -105,32 +105,62 @@ const Play = () => {
 
     return (
         <>
-            <code>TBI</code>
-            <p>Key: {gameId}</p>
-            <p>Points: {gameData.points}</p>
-            <p>State: {gameData.state}</p>
-            <p>Won: {gameData.won? 'Ganador': 'Perdedor'}</p>
-            <p>LivesLeft: {gameData.livesLeft}</p>
-
-            <button onClick={startGame}>
+            <div className="container">
+                <table className="table">
+                    <thead>
+                    <tr>
+                        <th>Nombre</th>
+                        <th>Valor</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td colSpan={2}><code>TBI</code></td>
+                        </tr>
+                        <tr>
+                            <td>Llave</td>
+                            <td>{gameId}</td>
+                        </tr>
+                        <tr>
+                            <td>Puntos</td>
+                            <td>{gameData.points}</td>
+                        </tr>
+                        <tr>
+                            <td>Estado</td>
+                            <td>{gameData.state}</td>
+                        </tr>
+                        <tr>
+                            <td>Resultado</td>
+                            <td>{gameData.won? 'Ganador': 'Perdedor'}</td>
+                        </tr>
+                        <tr>
+                            <td>Vidas restantes</td>
+                            <td>{gameData.livesLeft}</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+            <div className=" centrar">
+            <button onClick={startGame} className="btn">
                 Start New Game
             </button>
 
-            <button onClick={loseGame}>
+            <button onClick={loseGame} className="btn">
                 Perder Partida
             </button>
 
-            <button onClick={winGame}>
+            <button onClick={winGame} className="btn">
                 Ganar Partida
             </button>
 
-            <button onClick={loseLives}>
+            <button onClick={loseLives} className="btn">
                 Restar Vidas
             </button>
 
-            <button onClick={winPoints}>
+            <button onClick={winPoints} className="btn">
                 Aumentar Puntos
             </button>
+            </div>
         </>
     );
 };

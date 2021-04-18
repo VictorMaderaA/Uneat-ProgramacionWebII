@@ -40,18 +40,18 @@ const History = () => {
 
     return (
         <>
-            <p>{user.name}’s past games</p>
-
-            <table style={{width: '100%'}}>
+            <h1 className="centrar">Pasts games of: {user.name}</h1>
+            <div className="centrar">
+            <table className="table">
                 <thead>
                 <tr>
-                    <td>Key</td>
-                    <td>Fecha Ultima Modificacion</td>
-                    <td>Estado</td>
-                    <td>Puntos</td>
-                    <td>Resultado</td>
-                    <td>Vidas Restantes</td>
-                    <td>Actions</td>
+                    <th>Key</th>
+                    <th>Fecha Ultima Modificacion</th>
+                    <th>Estado</th>
+                    <th>Puntos</th>
+                    <th>Resultado</th>
+                    <th>Vidas Restantes</th>
+                    <th>Actions</th>
                 </tr>
                 </thead>
                 <tbody>
@@ -76,7 +76,7 @@ const History = () => {
                 }
                 </tbody>
             </table>
-
+            </div>
 
         </>
     );

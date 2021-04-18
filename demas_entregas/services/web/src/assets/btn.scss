@@ -1,0 +1,23 @@
+.btn{
+  background-color: #fff;
+  text-align: center;
+  text-decoration: none;
+  vertical-align: middle;
+  border: 2px solid #FF8C00;
+  padding: 10px 10px;
+  font-size: 15px;
+  border-radius: 5px;
+  margin: 10px 10px;
+  a{
+    text-decoration: none;
+    color: #F1AF5D;
+  }
+}
+.btn:hover{
+  background-color: #F1AF5D;
+  border-color: #fff;
+  color: #fff;
+  a{
+    color: #fff;
+  }
+}

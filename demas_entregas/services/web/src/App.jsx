@@ -4,7 +4,7 @@ import Landing from "./components/Landing.jsx";
 import Menu from "./components/Menu.jsx";
 import SignIn from "./components/SignIn.jsx";
 import AuthContext from "./AuthContext.js";
-
+import styles from "./main.scss";
 const App = () => {
   const [{ isLoggedIn, user }, setAuth] = useState({
     isLoggedIn: false,

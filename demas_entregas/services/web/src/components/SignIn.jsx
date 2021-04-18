@@ -22,15 +22,20 @@ const SignIn = ({ returnTo }) => {
   };
 
   return (
-    <form onSubmit={handleSubmit}>
-      <TextInput
-        label="Name"
-        name="name"
-        value={formValues.name}
-        onChange={handleInputChange}
-      />
-      <input type="submit" />
-    </form>
+      <div className="contenido">
+        <div className="card">
+          <h1>Identifícate</h1>
+          <form onSubmit={handleSubmit} className="formulario">
+            <TextInput
+                name="name"
+                placeholder="Pon tu nombre"
+                value={formValues.name}
+                onChange={handleInputChange}
+            />
+            <button type="submit" className="btn">Acceder</button>
+          </form>
+        </div>
+      </div>
   );
 };
 SignIn.propTypes = {

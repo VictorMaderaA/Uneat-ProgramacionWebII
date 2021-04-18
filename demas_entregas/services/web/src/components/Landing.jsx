@@ -4,10 +4,12 @@ import { Link } from "react-router-dom";
 const Landing = () => {
   return (
     <>
-      <h1>Entrega 02</h1>
-      <p>
-        Try <Link to="/sign-in">logging in</Link>.
-      </p>
+        <div className="contenido">
+            <div className="card">
+                <h1>Entrega 02</h1>
+                <button className="btn"><Link to="/sign-in">Ingresar</Link></button>
+            </div>
+        </div>
     </>
   );
 };

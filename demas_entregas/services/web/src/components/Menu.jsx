@@ -15,14 +15,14 @@ const Menu = () => {
     <>
       <nav>
         <ul>
-          <li>
-            <Link to={`${url}/stats`}>Stats</Link>
+          <li className="orange">
+            <Link to={`${url}/stats`}>Estadisticas</Link>
           </li>
-          <li>
-            <Link to={`${url}/play`}>New game</Link>
+          <li className="blue">
+            <Link to={`${url}/play`}>Nuevo Juego</Link>
           </li>
-          <li>
-            <Link to={`${url}/history`}>Past games</Link>
+          <li className="orange">
+            <Link to={`${url}/history`}>Historial de juego</Link>
           </li>
         </ul>
       </nav>
