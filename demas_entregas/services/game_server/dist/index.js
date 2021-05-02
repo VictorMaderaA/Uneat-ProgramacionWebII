@@ -18,18 +18,25 @@ app.get('/', (req, res) => {
 app.get('/new-game', (req, res) => {
     const height = 80;
     const width = 60;
-    const player = {
+    const newGame = createGame(height, width);
+    res.json(newGame);
+});
+function createPlayer(width) {
+    return {
         alive: true,
         position: {
             x: width / 2,
             y: 1
         }
     };
-    const newGame = {
+}
+function createGame(height, width) {
+    return {
         h: height,
         w: width,
-        player,
+        player: createPlayer(width),
         playing: true,
+        // @ts-ignore
         bullets: [],
         enemies: [
             {
@@ -41,8 +48,7 @@ app.get('/new-game', (req, res) => {
             }
         ],
     };
-    res.json(newGame);
-});
+}
 app.post('/tick', (req, res) => {
     // Variable del juego
     const reqGame = req.body;
@@ -88,6 +94,7 @@ app.post('/move', ((req, res) => {
     if (reqGame.player.position.y > reqGame.h || reqGame.player.position.y < 0) {
         reqGame.player.position.y -= mY;
     }
+    delete reqGame.input;
     // Respuesta
     res.json(reqGame);
 }));
@@ -97,20 +104,30 @@ app.post('/shoot', ((req, res) => {
     const pX = reqGame.player.position.x;
     const pY = reqGame.player.position.y;
     // Nueva bala
-    const newBullet = {
+    const newBullet = createBulletPlayer(pX, pY);
+    // Agregamos la nueva bala al juego
+    reqGame.bullets.push(newBullet);
+    // Respuesta
+    res.json(reqGame);
+}));
+function createBulletPlayer(pX, pY) {
+    return {
         owner: EntityOwnership.PLAYER,
         position: {
             x: pX,
             y: pY + 1
         }
     };
-    // Agregamos la nueva bala al juego
-    reqGame.bullets.push(newBullet);
-    // Respuesta
-    res.json(reqGame);
-}));
-app.listen(port, () => {
-    console.log(`Example app listening at http://localhost:${port}`);
-});
-module.exports = app;
+}
+if (!module.parent) {
+    app.listen(port, () => {
+        console.log(`Example app listening at http://localhost:${port}`);
+    });
+}
+module.exports = {
+    app,
+    createBulletPlayer,
+    createPlayer,
+    createGame
+};
 //# sourceMappingURL=index.js.map

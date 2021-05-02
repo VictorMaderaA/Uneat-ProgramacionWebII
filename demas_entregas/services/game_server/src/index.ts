@@ -58,20 +58,27 @@ app.get('/', (req: Request, res: Response) => {
 app.get('/new-game', (req: Request, res: Response) => {
     const height = 80;
     const width = 60;
+    const newGame: Game = createGame(height, width)
+    res.json(newGame);
+})
 
-    const player: Player = {
+function createPlayer(width: number) {
+    return {
         alive: true,
         position: {
             x: width / 2,
             y: 1
         }
     }
+}
 
-    const newGame: Game = {
+function createGame(height: number, width: number) {
+    return {
         h: height,
         w: width,
-        player,
+        player: createPlayer(width),
         playing: true,
+        // @ts-ignore
         bullets: [],
         enemies: [
             {
@@ -83,8 +90,7 @@ app.get('/new-game', (req: Request, res: Response) => {
             }
         ],
     }
-    res.json(newGame);
-})
+}
 
 app.post('/tick', (req: Request, res: Response) => {
     // Variable del juego
@@ -150,13 +156,7 @@ app.post('/shoot', ((req: Request, res: Response) => {
     const pY = reqGame.player.position.y
 
     // Nueva bala
-    const newBullet: Bullet = {
-        owner: EntityOwnership.PLAYER,
-        position: {
-            x: pX,
-            y: pY + 1
-        }
-    }
+    const newBullet: Bullet = createBulletPlayer(pX, pY)
     // Agregamos la nueva bala al juego
     reqGame.bullets.push(newBullet)
 
@@ -164,12 +164,25 @@ app.post('/shoot', ((req: Request, res: Response) => {
     res.json(reqGame);
 }))
 
-if(!module.parent){
+function createBulletPlayer(pX: number, pY: number): Bullet {
+    return {
+        owner: EntityOwnership.PLAYER,
+        position: {
+            x: pX,
+            y: pY + 1
+        }
+    }
+}
+
+if (!module.parent) {
     app.listen(port, () => {
         console.log(`Example app listening at http://localhost:${port}`)
     })
 }
 
 module.exports = {
-    app
+    app,
+    createBulletPlayer,
+    createPlayer,
+    createGame
 };
