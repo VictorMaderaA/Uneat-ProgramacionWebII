@@ -1,7 +1,6 @@
 # Entrega 03
 
-El ejercicio consiste en implementar un servidor web con Express, utilizando
-tests automatizados para el control de calidad.
+El ejercicio consiste en implementar un servidor web con Express, utilizando tests automatizados para el control de calidad.
 
 ## Entrega
 
