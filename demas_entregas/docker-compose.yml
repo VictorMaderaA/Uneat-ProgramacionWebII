@@ -1,0 +1,38 @@
+version: '3'
+
+services:
+  gameserver:
+    build: services/game_server
+    container_name: gameS
+    ports:
+      - 5000:5000
+    networks:
+      - app-network
+
+  statsserver:
+    build: services/stats_server
+    container_name: statsS
+    ports:
+      - 5001:5001
+    networks:
+      - app-network
+
+  controllerserver:
+    build: services/controller_server
+    container_name: controllerS
+    ports:
+      - 5002:5002
+    networks:
+      - app-network
+
+  web:
+    build: services/web
+    container_name: web
+    ports:
+      - 3000:80
+    networks:
+      - app-network
+
+networks:
+  app-network:
+    driver: bridge
