@@ -13,7 +13,7 @@ module.exports = {
     historyApiFallback: true,
   },
   output: {
-    filename: "bundle.js",
+    filename: "index.js",
     path: path.join(__dirname, "dist"),
     clean: true,
   },
@@ -26,16 +26,9 @@ module.exports = {
   module: {
     rules: [
       {
-        test: /.(js|jsx)$/,
-        use: {
-          loader: "babel-loader",
-          options: {
-            presets: [
-              ["@babel/preset-env", { targets: "defaults" }],
-              "@babel/preset-react",
-            ],
-          },
-        },
+        test: /\.(js|jsx)$/,
+        exclude: /node_modules/,
+        use: ['babel-loader'] // include eslint-loader
       },
       {
         test: /\.s[ac]ss$/i,

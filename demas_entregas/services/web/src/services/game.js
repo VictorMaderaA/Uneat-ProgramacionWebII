@@ -1,30 +1,46 @@
 import * as gql from 'gql-query-builder'
 
+let gqlUrl = "https://prograwebii-vrma.glitch.me/"
+let controllerServer = "http://localhost:5002"
 
 //Starts new game and set as playing
 export const updateGame = (uuid, data) => {
-    console.log('UPDATE', uuid, data)
-    store(uuid, data)
+    return store(uuid, data)
 }
 
 function store(uuid, data) {
+    // let requestOptions = {
+    //     method: 'POST',
+    //     headers: {
+    //         "Content-Type": "application/json"
+    //     },
+    //     body: JSON.stringify(gql.mutation({
+    //         operation: 'updatePair',
+    //         variables: {
+    //             ...data,
+    //             key: { value: uuid, required: true },
+    //         },
+    //         fields: ['applicationId', 'key', 'createdAt']
+    //     }))
+    // };
+    //
+    // return fetch(baseUrl, requestOptions)
+    //     .then(response => response.json())
+    //     .catch(error => console.log('error', error));
+
     let requestOptions = {
         method: 'POST',
         headers: {
             "Content-Type": "application/json"
         },
-        body: JSON.stringify(gql.mutation({
-            operation: 'updatePair',
-            variables: {
-                ...data,
-                key: { value: uuid, required: true },
-            },
-            fields: ['applicationId', 'key', 'createdAt']
-        }))
+        body: JSON.stringify({
+            data,
+            uuid
+        })
     };
-
-    return fetch("http://localhost:3002/", requestOptions)
+    return fetch(controllerServer+'/game', requestOptions)
         .then(response => response.json())
+        .then(r => r.gqlRes)
         .catch(error => console.log('error', error));
 }
 
@@ -44,11 +60,12 @@ export function allPrefix(prefix) {
                     'points',
                     'won',
                     'livesLeft',
+                    'game'
                 ]}]
         }))
     };
 
-    return fetch("http://localhost:3002/", requestOptions)
+    return fetch(gqlUrl, requestOptions)
         .then(response => response.json())
         .then(r => {
             return r.data.pairByPrefix
@@ -72,11 +89,12 @@ export function find(key) {
                     'points',
                     'won',
                     'livesLeft',
+                    'game'
                 ]}]
         }))
     };
 
-    return fetch("http://localhost:3002/", requestOptions)
+    return fetch(gqlUrl, requestOptions)
         .then(response => response.json())
         .then(r => {
             return r.data.pair
@@ -108,7 +126,7 @@ export function stats(key) {
         }))
     };
 
-    return fetch("http://localhost:3002/", requestOptions)
+    return fetch(gqlUrl, requestOptions)
         .then(response => response.json())
         .then(r => {
             return r.data.stats

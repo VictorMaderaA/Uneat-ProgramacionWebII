@@ -1,12 +1,13 @@
 import {Request, Response} from "express";
-
+const cors = require('cors')
 const express = require('express')
 const app = express()
 app.use(express.json());
+app.use(cors())
 app.use(express.urlencoded({
     extended: true
 }));
-const port = 3000
+const port = 5000
 
 interface EntityPosition {
     position: Position
@@ -56,8 +57,8 @@ app.get('/', (req: Request, res: Response) => {
 })
 
 app.get('/new-game', (req: Request, res: Response) => {
-    const height = 80;
-    const width = 60;
+    const height = 20;
+    const width = 20;
     const newGame: Game = createGame(height, width)
     res.json(newGame);
 })
@@ -85,7 +86,7 @@ function createGame(height: number, width: number) {
                 alive: true,
                 position: {
                     x: width / 2,
-                    y: height
+                    y: height -3
                 }
             }
         ],

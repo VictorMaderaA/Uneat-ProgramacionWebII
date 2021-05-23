@@ -23,6 +23,7 @@ const typeDefs = `
         points: Int
         won: Boolean
         livesLeft: Int
+        game: String
     }
     type Stats {
         ganadas: Int
@@ -46,6 +47,7 @@ const typeDefs = `
             points: Int
             won: Boolean
             livesLeft: Int
+            game:String
         ): Pair
     }
 `;
@@ -132,5 +134,5 @@ const server = new GraphQLServer({typeDefs, resolvers});
 
 server.start({
     playground: "/",
-    port: 3002
+    port: 5001
 });

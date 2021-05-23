@@ -1,12 +1,14 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
+const cors = require('cors');
 const express = require('express');
 const app = express();
 app.use(express.json());
+app.use(cors());
 app.use(express.urlencoded({
     extended: true
 }));
-const port = 3000;
+const port = 5000;
 var EntityOwnership;
 (function (EntityOwnership) {
     EntityOwnership[EntityOwnership["PLAYER"] = 0] = "PLAYER";
@@ -16,8 +18,8 @@ app.get('/', (req, res) => {
     res.send('Hello World!');
 });
 app.get('/new-game', (req, res) => {
-    const height = 80;
-    const width = 60;
+    const height = 20;
+    const width = 20;
     const newGame = createGame(height, width);
     res.json(newGame);
 });
@@ -43,7 +45,7 @@ function createGame(height, width) {
                 alive: true,
                 position: {
                     x: width / 2,
-                    y: height
+                    y: height - 3
                 }
             }
         ],
